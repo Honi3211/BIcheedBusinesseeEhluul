@@ -6,7 +6,7 @@ const Header = () => {
     <div className="w-full bg-primary-color text-secondary-color h-[100px] shadow-custom-headerShadow flex justify-center fixed z-50">
       <div className="w-[90%] md:w-[80%] flex justify-around items-center transition duration-500">
         <Link href={"/signup"}>
-          <HeaderEl text={"Бүртгүүлэх"} />
+          <HeaderEl text={"Хүсэлт"} />
         </Link>
         <Link href={"/"}>
           <img
@@ -15,7 +15,7 @@ const Header = () => {
             className="w-[100px] cursor-pointer"
           />
         </Link>
-        <Link href={"/"}>
+        <Link href={"/"} className="text-center">
           <HeaderEl text={"Бидний тухай"} />
         </Link>
       </div>

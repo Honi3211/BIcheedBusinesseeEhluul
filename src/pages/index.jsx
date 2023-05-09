@@ -10,23 +10,6 @@ import Image from "next/image";
 import { sponsors } from "../../public/sponsors";
 
 export default function Home() {
-  const {
-    name,
-    setName,
-    lastname,
-    setLastname,
-    email,
-    setEmail,
-    boughtHouse,
-    setBoughtHouse,
-    joinedJob,
-    setJoinedJob,
-    salary,
-    setSalary,
-    haveUnderEighteenKid,
-    setHaveUnderEighteenKid,
-    AddUser,
-  } = useContext(UserContext);
 
   return (
     <div className="h-screen">

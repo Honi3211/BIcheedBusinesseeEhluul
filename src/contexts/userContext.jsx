@@ -1,17 +1,22 @@
 import { createContext, useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore/lite";
+import { setDoc, doc } from "firebase/firestore/lite";
 import { db } from "@/hooks/firebase";
 
 export const UserContext = createContext(null);
 
 export const UserContextProvider = ({ children }) => {
+  const [state, setState] = useState([]);
+  const [personNumber, setPersonNumber] = useState();
   const [name, setName] = useState();
   const [lastname, setLastname] = useState();
   const [email, setEmail] = useState();
-  const [boughtHouse, setBoughtHouse] = useState();
-  const [joinedJob, setJoinedJob] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [jobName, setJobName] = useState();
+  const [whenJoinedJob, setWhenJoinedJob] = useState();
   const [salary, setSalary] = useState();
+  const [boughtHouse, setBoughtHouse] = useState();
   const [haveUnderEighteenKid, setHaveUnderEighteenKid] = useState();
+  const [isMarried, setIsMarried] = useState();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const characters =
@@ -29,25 +34,34 @@ export const UserContextProvider = ({ children }) => {
 
   const AddUser = async (path) => {
     if (
+      !personNumber ||
       !name ||
       !lastname ||
       !email ||
-      !boughtHouse ||
-      !joinedJob ||
+      !phoneNumber ||
+      !jobName ||
+      !whenJoinedJob ||
       !salary ||
-      !haveUnderEighteenKid
+      !boughtHouse ||
+      !haveUnderEighteenKid ||
+      !isMarried
     ) {
       console.log("burtgel amjiltgui");
       return 0;
     }
+
     await setDoc(doc(db, path, RandomString(20)), {
+      personNumber: personNumber,
       name: name,
       lastname: lastname,
       email: email,
-      boughtHouse: boughtHouse,
-      whenJoinedJob: joinedJob,
+      phoneNumber: phoneNumber,
+      jobName: jobName,
+      whenJoinedJob: whenJoinedJob,
       salary: salary,
+      boughtHouse: boughtHouse,
       haveUnderEighteenKid: haveUnderEighteenKid,
+      isMarried: isMarried,
     });
     console.log("amjilttai burtguullee");
     return 0;
@@ -56,6 +70,8 @@ export const UserContextProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        personNumber,
+        setPersonNumber,
         name,
         setName,
         lastname,
@@ -64,12 +80,18 @@ export const UserContextProvider = ({ children }) => {
         setEmail,
         boughtHouse,
         setBoughtHouse,
-        joinedJob,
-        setJoinedJob,
+        whenJoinedJob,
+        setWhenJoinedJob,
         salary,
         setSalary,
         haveUnderEighteenKid,
         setHaveUnderEighteenKid,
+        phoneNumber,
+        setPhoneNumber,
+        jobName,
+        setJobName,
+        isMarried,
+        setIsMarried,
         AddUser,
         isSubmitted,
         setIsSubmitted,
