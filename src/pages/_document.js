@@ -1,8 +1,12 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import { Helmet } from "react-helmet";
 
 export default function Document() {
   return (
     <Html lang="en">
+      <Helmet>
+        <link rel="icon" sizes="180x180" href="../../public/favicon.ico" />
+      </Helmet>
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -10,6 +14,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
           rel="stylesheet"
         />
+        <title>Бичээд Бизнесээ Эхлүүл</title>
       </Head>
       <body>
         <Main />

@@ -1,7 +1,6 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import SignUpPart from "@/components/pageParts/signUpPart";
-import SponsorsFooter from "@/components/sponsorsFooter";
 
 export default function SignUp() {
   return (

@@ -1,16 +1,9 @@
-import { UserContext } from "@/contexts/userContext";
-import { useContext, useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore/lite";
-import { db } from "@/hooks/firebase";
 import Header from "@/components/header";
 import PromotionPart from "@/components/pageParts/promotion";
 import Footer from "@/components/footer";
 import SponsorsFooter from "@/components/sponsorsFooter";
-import Image from "next/image";
-import { sponsors } from "../../public/sponsors";
 
 export default function Home() {
-
   return (
     <div className="h-screen">
       <Header />
