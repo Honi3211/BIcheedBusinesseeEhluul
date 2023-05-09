@@ -1,7 +1,7 @@
 const Input = ({ title, placeholder, className, onChange }) => {
   return (
     <div className={`${className}`}>
-      <p className="text-white ">{title}</p>
+      <p className="text-white">{title}</p>
       <input
         type="text"
         className="w-full md:w-[300px] px-[10px] box-border py-[5px] rounded-[10px] 

@@ -6,11 +6,15 @@ export const UserContext = createContext(null);
 
 export const UserContextProvider = ({ children }) => {
   const [state, setState] = useState([]);
-  const [personNumber, setPersonNumber] = useState();
+  const [personNummer, setPersonNummer] = useState();
   const [name, setName] = useState();
   const [lastname, setLastname] = useState();
   const [email, setEmail] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
+  const [lendSize, setLendSize] = useState(300000);
+  const [lendDuration, setLendDuration] = useState(1);
+  const [lendCause, setLendCause] = useState();
+  const [lendPartner, setLendPartner] = useState();
   const [jobName, setJobName] = useState();
   const [whenJoinedJob, setWhenJoinedJob] = useState();
   const [salary, setSalary] = useState();
@@ -34,11 +38,15 @@ export const UserContextProvider = ({ children }) => {
 
   const AddUser = async (path) => {
     if (
-      !personNumber ||
+      !personNummer ||
       !name ||
       !lastname ||
       !email ||
       !phoneNumber ||
+      !lendSize ||
+      !lendDuration ||
+      !lendCause ||
+      !lendPartner ||
       !jobName ||
       !whenJoinedJob ||
       !salary ||
@@ -51,11 +59,15 @@ export const UserContextProvider = ({ children }) => {
     }
 
     await setDoc(doc(db, path, RandomString(20)), {
-      personNumber: personNumber,
+      personNummer: personNummer,
       name: name,
       lastname: lastname,
       email: email,
       phoneNumber: phoneNumber,
+      lendSize: lendSize,
+      lendDuration: lendDuration,
+      lendCause: lendCause,
+      lendPartner: lendPartner,
       jobName: jobName,
       whenJoinedJob: whenJoinedJob,
       salary: salary,
@@ -70,8 +82,8 @@ export const UserContextProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        personNumber,
-        setPersonNumber,
+        personNummer,
+        setPersonNummer,
         name,
         setName,
         lastname,
@@ -92,6 +104,14 @@ export const UserContextProvider = ({ children }) => {
         setJobName,
         isMarried,
         setIsMarried,
+        lendSize,
+        setLendSize,
+        lendDuration,
+        setLendDuration,
+        lendCause,
+        setLendCause,
+        lendPartner,
+        setLendPartner,
         AddUser,
         isSubmitted,
         setIsSubmitted,

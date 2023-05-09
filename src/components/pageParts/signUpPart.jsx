@@ -3,13 +3,30 @@ import Button from "../button";
 import Input from "../input";
 import Select from "react-select";
 import { UserContext } from "@/contexts/userContext";
+import { Slider } from "@mui/material";
 
 const questions = [
-  { text: "Personnumber", id: "personnumber" },
+  { text: "Personnummer", id: "personnummer" },
   { text: "Нэр", id: "name" },
   { text: "Овог", id: "lastname" },
   { text: "Майл Хаяг", id: "email" },
   { text: "Утасны дугаар", id: "phonenumber" },
+  {
+    text: "Зээлийн хүсэх хэмжээ (Swedish Krona = 0.098037 Dollars)",
+    id: "lendsize",
+    min: 0,
+    max: 600000,
+    defaultValue: 300000,
+  },
+  {
+    text: "Зээлийн хугацаа (Жил)",
+    id: "lendduration",
+    min: 1,
+    max: 15,
+    defaultValue: 2,
+  },
+  { text: "Зээлийн шалтгаан", id: "lendcause" },
+  { text: "Хамтран зээлдэгч", id: "lendpartner" },
   { text: "Ажлын газрын нэр", id: "jobname" },
   { text: "Хэзээнээс ажилд орсон", id: "whenjoinedjob" },
   { text: "Цалин (Före skatt)", id: "salary" },
@@ -18,16 +35,27 @@ const questions = [
   { text: "Гэрлэсэн эсэх", id: "ismarried" },
 ];
 
-const options = [
-  { label: "Гэрлэсэн", value: "married", id: 1 },
-  { label: "Хамтран амьдрагчтай", value: "liveTogether", id: 2 },
-  { label: "Ганц бие", value: "single", id: 3 },
+const isMarriedOptions = [
+  { label: "Гэрлэсэн", value: "Gerlesen", id: 1 },
+  { label: "Хамтран амьдрагчтай", value: "Hamtran amidragchtai", id: 2 },
+  { label: "Ганц бие", value: "Gants biy", id: 3 },
+];
+
+const lendCauseOptions = [
+  { label: "Машин", value: "Mashin", id: 1 },
+  { label: "Байрны засвар", value: "Bairnii zasvar", id: 2 },
+  {
+    label: "Одоо байгаа зээлээ нэгтгэх",
+    value: "Odoo baigaa zeelee negtgeh",
+    id: 3,
+  },
+  { label: "Бэлэн мөнгөний зээл", value: "Belen mungunii zeel", id: 4 },
 ];
 
 const SignUpPart = () => {
   const {
-    personNumber,
-    setPersonNumber,
+    personNummer,
+    setPersonNummer,
     name,
     setName,
     lastname,
@@ -48,12 +76,21 @@ const SignUpPart = () => {
     setJobName,
     isMarried,
     setIsMarried,
+    lendSize,
+    setLendSize,
+    lendDuration,
+    setLendDuration,
+    lendCause,
+    setLendCause,
+    lendPartner,
+    setLendPartner,
     AddUser,
     isSubmitted,
     setIsSubmitted,
   } = useContext(UserContext);
 
-  const [value, setValue] = useState("");
+  const [marriedValue, setMarriedValue] = useState("");
+  const [lendCauseValue, setLendCauseValue] = useState("");
 
   const IsValidateEmail = (mail) => {
     let re = /\S+@\S+\.\S+/;
@@ -67,7 +104,7 @@ const SignUpPart = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="w-[1000px] md:h-[800px] bg-gradient-to-t from-[#8f91f1] to-[#a2a3f8] shadow-2xl rounded-[8px] relative flex flex-col items-center justify-center box-border p-[30px]">
+      <div className="w-[1000px] md:h-[1000px] bg-gradient-to-t from-[#8f91f1] to-[#a2a3f8] shadow-2xl rounded-[8px] relative flex flex-col items-center justify-center box-border p-[30px]">
         <h1 className="font-bold  text-[40px] md:text-[50px] text-secondary-color uppercase">
           Хүсэлт
         </h1>
@@ -77,7 +114,7 @@ const SignUpPart = () => {
           <div className="flex flex-col items-center">
             <div className="flex flex-wrap justify-center">
               {questions.map((question, index) => {
-                if (question.text === "Гэрлэсэн эсэх") {
+                if (question.id === "ismarried") {
                   return (
                     <div
                       className="flex flex-col justify-center m-[15px]"
@@ -86,17 +123,16 @@ const SignUpPart = () => {
                       <p className="text-white">{question.text}</p>
                       <Select
                         className="min-w-[169px] md:w-[300px] box-border"
-                        options={options}
-                        defaultValue={value}
+                        options={isMarriedOptions}
+                        defaultValue={marriedValue}
                         onChange={(choice) => {
-                          setValue(choice.value);
+                          setMarriedValue(choice.value);
                           setIsMarried(choice.value);
-                          // console.log(isMarried);
                         }}
                       />
                     </div>
                   );
-                } else if (question.text === "Хэзээнээс ажилд орсон") {
+                } else if (question.id === "whenjoinedjob") {
                   return (
                     <div
                       className="flex flex-col justify-center m-[15px]"
@@ -112,15 +148,59 @@ const SignUpPart = () => {
                       />
                     </div>
                   );
+                } else if (
+                  question.id === "lendsize" ||
+                  question.id === "lendduration"
+                ) {
+                  return (
+                    <div
+                      className="flex flex-col justify-center m-[15px] md:w-[300px]"
+                      key={index}
+                    >
+                      <p className="text-white">{question.text}</p>
+                      <Slider
+                        size={"medium"}
+                        min={question.min}
+                        max={question.max}
+                        onChange={(e) => {
+                          question.id === "lendsize"
+                            ? setLendSize(e.target.value)
+                            : setLendDuration(e.target.value);
+                        }}
+                        defaultValue={question.defaultValue}
+                        aria-label="Small"
+                        valueLabelDisplay="auto"
+                        className="md:w-[300px] text-white"
+                      />
+                    </div>
+                  );
+                } else if (question.id === "lendcause") {
+                  return (
+                    <div
+                      className="flex flex-col justify-center m-[15px] md:w-[300px]"
+                      key={index}
+                    >
+                      <p className="text-white">{question.text}</p>
+                      <Select
+                        className="md:w-[300px] box-border"
+                        options={lendCauseOptions}
+                        defaultValue={lendCauseValue}
+                        onChange={(choice) => {
+                          setLendCauseValue(choice.value);
+                          setLendCause(choice.value);
+                        }}
+                      />
+                    </div>
+                  );
                 } else {
                   return (
                     <Input
                       title={question.text}
-                      className={"m-[15px]"}
+                      className={"m-[15px] md:w-[300px]"}
                       key={index}
                       onChange={(e) => {
-                        if (question.id === "personnumber") {
-                          setPersonNumber(e.target.value);
+                        if (question.id === "personnummer") {
+                          setPersonNummer(e.target.value);
                         } else if (question.id === "name") {
                           setName(e.target.value);
                         } else if (question.id === "lastname") {
@@ -129,6 +209,8 @@ const SignUpPart = () => {
                           setEmail(e.target.value);
                         } else if (question.id === "phonenumber") {
                           setPhoneNumber(e.target.value);
+                        } else if (question.id === "lendpartner") {
+                          setLendPartner(e.target.value);
                         } else if (question.id === "jobname") {
                           setJobName(e.target.value);
                         } else if (question.id === "salary") {
@@ -150,7 +232,7 @@ const SignUpPart = () => {
               text={"Илгээх"}
               func={async () => {
                 if (!IsValidateEmail(email))
-                  return alert("mail ee zuv hiine uu");
+                  return alert("Майл хаягаа зөв оруулна уу.");
                 await AddUser("users");
                 setIsSubmitted(true);
               }}
@@ -158,8 +240,8 @@ const SignUpPart = () => {
           </div>
         ) : (
           <h2 className="md:w-[400px] text-white text-center">
-            Амжилттай бүртгүүллээ! Бид таны мэдээлэлтэй танилцсаны дараа эргээд
-            холбогдох болно.
+            Амжилттай бүртгүүллээ! Бид таны мэдээлэлтэй танилцсанаас 24 цагийн
+            дараа эргээд холбогдох болно.
           </h2>
         )}
       </div>
