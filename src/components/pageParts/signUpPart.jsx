@@ -12,11 +12,20 @@ const questions = [
   { text: "Майл Хаяг", id: "email" },
   { text: "Утасны дугаар", id: "phonenumber" },
   {
-    text: "Зээлийн хүсэх хэмжээ (Swedish Krona = 0.098037 Dollars)",
+    text: "Зээлийн хүсэх хэмжээ (Sek)",
     id: "lendsize",
     min: 0,
-    max: 600000,
-    defaultValue: 300000,
+    max: 600,
+    defaultValue: 50,
+    marks: [
+      { value: 0 },
+      { value: 50 },
+      { value: 100 },
+      { value: 150 },
+      { value: 200 },
+      { value: 600 },
+    ],
+    step: null,
   },
   {
     text: "Зээлийн хугацаа (Жил)",
@@ -24,6 +33,8 @@ const questions = [
     min: 1,
     max: 15,
     defaultValue: 2,
+    marks: false,
+    step: 1,
   },
   { text: "Зээлийн шалтгаан", id: "lendcause" },
   { text: "Хамтран зээлдэгч", id: "lendpartner" },
@@ -167,6 +178,8 @@ const SignUpPart = () => {
                             ? setLendSize(e.target.value)
                             : setLendDuration(e.target.value);
                         }}
+                        marks={question.marks}
+                        step={question.step}
                         defaultValue={question.defaultValue}
                         aria-label="Small"
                         valueLabelDisplay="auto"
