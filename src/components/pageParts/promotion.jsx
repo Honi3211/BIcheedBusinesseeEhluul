@@ -39,7 +39,7 @@ const PromotionPart = () => {
 
           <div className="flex justify-center">
             <Link href={"/signup"}>
-              <Button text={"Бүртгүүлэх"} />
+              <Button text={"Хүсэлт гаргах"} />
             </Link>
           </div>
         </div>

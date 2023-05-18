@@ -1,6 +1,7 @@
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { SvgIcon } from "@mui/material";
 import Link from "next/link";
+import logo from '../../public/logo.png'
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
       <div className="w-full md:w-[80%] flex flex-col md:flex-row md:justify-around">
         <div className="w-[200px] hidden md:flex items-center">
           <img
-            src="https://scontent.fuln8-1.fna.fbcdn.net/v/t39.30808-6/304492750_368634872151217_7922941841875299432_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=-VdyELdCbHYAX9Mod9T&_nc_ht=scontent.fuln8-1.fna&oh=00_AfCMragx4GYfKz9xdZQO9CNN7r00uzJJstHVFgPAely1Fg&oe=645C7E83"
+            src={logo.src}
             alt=""
           />
         </div>
