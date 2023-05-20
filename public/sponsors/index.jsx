@@ -9,6 +9,8 @@ import nordnet from "./nordnet.png";
 import santander from "./santander.png";
 import sevenday from "./sevenday.png";
 import svea from "./svea.png";
+import konsumentkredit from "./konsumentkredit.png";
+import moneygo from "./moneygo.png";
 
 export const sponsors = [
   { src: avida },
@@ -22,4 +24,6 @@ export const sponsors = [
   { src: sevenday },
   { src: svea },
   { src: banknorwegian },
+  { src: konsumentkredit },
+  { src: moneygo },
 ];

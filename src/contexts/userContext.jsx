@@ -19,7 +19,7 @@ export const UserContextProvider = ({ children }) => {
   const [whenJoinedJob, setWhenJoinedJob] = useState();
   const [salary, setSalary] = useState();
   const [boughtHouse, setBoughtHouse] = useState();
-  const [haveUnderEighteenKid, setHaveUnderEighteenKid] = useState();
+  const [haveUnder18Kid, setHaveUnder18Kid] = useState();
   const [isMarried, setIsMarried] = useState();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -51,7 +51,7 @@ export const UserContextProvider = ({ children }) => {
       !whenJoinedJob ||
       !salary ||
       !boughtHouse ||
-      !haveUnderEighteenKid ||
+      !haveUnder18Kid ||
       !isMarried
     ) {
       console.log("burtgel amjiltgui");
@@ -72,7 +72,7 @@ export const UserContextProvider = ({ children }) => {
       whenJoinedJob: whenJoinedJob,
       salary: salary,
       boughtHouse: boughtHouse,
-      haveUnderEighteenKid: haveUnderEighteenKid,
+      haveUnder18Kid: haveUnder18Kid,
       isMarried: isMarried,
     });
     console.log("amjilttai burtguullee");
@@ -96,8 +96,8 @@ export const UserContextProvider = ({ children }) => {
         setWhenJoinedJob,
         salary,
         setSalary,
-        haveUnderEighteenKid,
-        setHaveUnderEighteenKid,
+        haveUnder18Kid,
+        setHaveUnder18Kid,
         phoneNumber,
         setPhoneNumber,
         jobName,
