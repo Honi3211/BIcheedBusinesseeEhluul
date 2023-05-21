@@ -127,11 +127,17 @@ const SignUpPart = () => {
       user.personNummer === personNummer ||
       user.personNummer === partnerPersonNummer
   );
-  let foundPartner = users.find(
-    (user) =>
+  let foundPartner = users.find((user) => {
+    if (user.haveLendPartner === "Үгүй") {
+      return undefined;
+    }
+    if (
       user.haveLendPartner[0].partnerPersonNummer === personNummer ||
       user.haveLendPartner[0].partnerPersonNummer === partnerPersonNummer
-  );
+    ) {
+      return user.haveLendPartner[0];
+    }
+  });
 
   useEffect(() => {
     setStartDate(date);
@@ -314,9 +320,7 @@ const SignUpPart = () => {
                             setCheckLendPartner(
                               choice.value === "Тийм" ? true : false
                             ),
-                            setHaveLendPartner(choice.value),
-                            console.log(checkLendPartner),
-                            console.log(haveLendPartner))
+                            setHaveLendPartner(choice.value))
                           : setLendCauseValue(choice.value),
                           setLendCause(choice.value);
                       }}
@@ -346,31 +350,35 @@ const SignUpPart = () => {
             <Button
               text={"Илгээх"}
               func={async () => {
-                if (!IsValidateEmail(email))
-                  return alert("Майл хаягаа зөв оруулна уу.");
+                // if (!IsValidateEmail(email))
+                //   return alert("Майл хаягаа зөв оруулна уу.");
+
+                console.log(users);
+                console.log(foundUser);
+                console.log(foundPartner);
 
                 if (!foundUser) {
                   if (!foundPartner) {
                     return (
                       await AddUser("users"), AddPersonNummer("personNummers")
                     );
-                  } else if (
-                    foundPartner.endDate.seconds >
-                    date.getTime() / 1000
+                  }
+                  if (
+                    foundPartner &&
+                    foundPartner.endDate.seconds > date.getTime() / 1000
                   ) {
                     return alert(
                       "Таны хамтран зээлдэгчийн Personnummer 30 хоногийн Ban-тай байна!"
                     );
-                  } else {
-                    await AddUser("users"), AddPersonNummer("personNummers");
                   }
-                } else if (foundUser.endDate.seconds > date.getTime() / 1000) {
-                  return alert("Таны Personnummer 30 хоногийн Ban-тай байна!");
-                } else {
                   return (
                     await AddUser("users"), AddPersonNummer("personNummers")
                   );
                 }
+                if (foundUser.endDate.seconds > date.getTime() / 1000) {
+                  return alert("Таны Personnummer 30 хоногийн Ban-тай байна!");
+                }
+                return await AddUser("users"), AddPersonNummer("personNummers");
               }}
             />
           </div>
