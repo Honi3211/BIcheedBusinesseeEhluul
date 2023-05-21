@@ -141,7 +141,6 @@ export const UserContextProvider = ({ children }) => {
           ],
     });
     setIsSubmitted(true);
-    console.log("amjilttai burtguullee");
     return 0;
   };
 
@@ -170,7 +169,6 @@ export const UserContextProvider = ({ children }) => {
           ],
     });
     setIsSubmitted(true);
-    console.log("amjilttai personnummer burtguullee");
     return 0;
   };
 

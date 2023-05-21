@@ -8,6 +8,7 @@ const Input = ({ title, placeholder, className, onChange, type }) => {
         border-slate-300 border focus:outline-none focus:border-secondary-color focus:ring-1 focus:ring-secondary-color"
         placeholder={placeholder}
         onChange={onChange}
+        onWheel={(e) => e.target.blur()}
       />
     </div>
   );
