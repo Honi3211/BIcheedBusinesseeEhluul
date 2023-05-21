@@ -18,6 +18,7 @@ const SelectInput = ({
         defaultValue={defaultValue}
         placeholder={placeholder}
         onChange={onChange}
+        isSearchable={false}
         key={index}
       />
     </div>
