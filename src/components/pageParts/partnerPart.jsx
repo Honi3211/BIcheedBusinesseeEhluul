@@ -3,12 +3,12 @@ import {
   personalQuestions,
   jobQuestions,
   otherQuestions,
-} from "@/contexts/questions";
+} from "../../../texts/questions";
 import {
   partnerHaveUnder18Options,
   partnerIsBoughtHouseOptions,
   partnerIsMarriedOptions,
-} from "@/contexts/options";
+} from "../../../texts/options";
 import Input from "../input";
 import DateInput from "../date";
 import SelectInput from "../select";
@@ -17,27 +17,16 @@ import { UserContext } from "@/contexts/userContext";
 
 const PartnerPart = () => {
   const {
-    partnerPersonNummer,
     setPartnerPersonNummer,
-    partnerName,
     setPartnerName,
-    partnerLastname,
     setPartnerLastname,
-    partnerEmail,
     setPartnerEmail,
-    partnerPhoneNumber,
     setPartnerPhoneNumber,
-    partnerJobName,
     setPartnerJobName,
-    partnerWhenJoinedJob,
     setPartnerWhenJoinedJob,
-    partnerSalary,
     setPartnerSalary,
-    partnerIsBoughtHouse,
     setPartnerIsBoughtHouse,
-    partnerHaveUnder18Kid,
     setPartnerHaveUnder18Kid,
-    partnerIsMarried,
     setPartnerIsMarried,
     partnerIsMarriedValue,
     setPartnerIsMarriedValue,

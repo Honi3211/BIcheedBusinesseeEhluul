@@ -15,7 +15,7 @@ export const UserContextProvider = ({ children }) => {
   const [lendSize, setLendSize] = useState(300000);
   const [lendDuration, setLendDuration] = useState(1);
   const [lendCause, setLendCause] = useState();
-  const [haveLendPartner, setHaveLendPartner] = useState();
+  const [haveLendPartner, setHaveLendPartner] = useState("Үгүй");
   const [jobName, setJobName] = useState();
   const [whenJoinedJob, setWhenJoinedJob] = useState();
   const [salary, setSalary] = useState();
@@ -140,11 +140,48 @@ export const UserContextProvider = ({ children }) => {
             },
           ],
     });
-    setIsSubmitted(true);
+    // setIsSubmitted(true);
     return 0;
   };
 
   const AddPersonNummer = async (path) => {
+    if (
+      !personNummer ||
+      !name ||
+      !lastname ||
+      !email ||
+      !phoneNumber ||
+      !lendSize ||
+      !lendDuration ||
+      !lendCause ||
+      !haveLendPartner ||
+      !jobName ||
+      !whenJoinedJob ||
+      !salary ||
+      !isBoughtHouse ||
+      !haveUnder18Kid ||
+      !isMarried
+    ) {
+      return 0;
+    }
+    if (checkLendPartner === true) {
+      if (
+        !partnerPersonNummer ||
+        !partnerName ||
+        !partnerLastname ||
+        !partnerEmail ||
+        !partnerPhoneNumber ||
+        !partnerJobName ||
+        !partnerWhenJoinedJob ||
+        !partnerSalary ||
+        !partnerIsBoughtHouse ||
+        !partnerHaveUnder18Kid ||
+        !partnerIsMarried
+      ) {
+        return 0;
+      }
+    }
+
     if (!personNummer || !name) {
       return 0;
     }

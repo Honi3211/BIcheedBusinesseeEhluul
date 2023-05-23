@@ -11,51 +11,37 @@ import {
   haveUnder18Options,
   isBoughtHouseOptions,
   haveLendPartnerOptions,
-} from "@/contexts/options";
+} from "../../../texts/options";
 import {
   personalQuestions,
   jobQuestions,
   otherQuestions,
   lendQuestions,
-} from "@/contexts/questions";
+} from "../../../texts/questions";
 import BigTitle from "../bigTitle";
 import PartnerPart from "./partnerPart";
-import { Check } from "@mui/icons-material";
+import { texts } from "../../../texts";
 
 const SignUpPart = () => {
   const {
     personNummer,
     setPersonNummer,
-    name,
     setName,
-    lastname,
     setLastname,
     email,
     setEmail,
-    isBoughtHouse,
     setIsBoughtHouse,
-    whenJoinedJob,
     setWhenJoinedJob,
-    salary,
     setSalary,
-    haveUnder18Kid,
     setHaveUnder18Kid,
-    phoneNumber,
     setPhoneNumber,
-    jobName,
     setJobName,
-    isMarried,
     setIsMarried,
-    lendSize,
     setLendSize,
-    lendDuration,
     setLendDuration,
-    lendCause,
     setLendCause,
-    haveLendPartner,
     setHaveLendPartner,
     isSubmitted,
-    setIsSubmitted,
     checkLendPartner,
     setCheckLendPartner,
     isMarriedValue,
@@ -69,43 +55,13 @@ const SignUpPart = () => {
     haveLendPartnerValue,
     setHaveLendPartnerValue,
 
-    partnerPersonNummer,
-    setPartnerPersonNummer,
-    partnerName,
-    setPartnerName,
-    partnerLastname,
-    setPartnerLastname,
     partnerEmail,
-    setPartnerEmail,
-    partnerPhoneNumber,
-    setPartnerPhoneNumber,
-    partnerJobName,
-    setPartnerJobName,
-    partnerWhenJoinedJob,
-    setPartnerWhenJoinedJob,
-    partnerSalary,
-    setPartnerSalary,
-    partnerIsBoughtHouse,
-    setPartnerIsBoughtHouse,
-    partnerHaveUnder18Kid,
-    setPartnerHaveUnder18Kid,
-    partnerIsMarried,
-    setPartnerIsMarried,
-    partnerIsMarriedValue,
-    setPartnerIsMarriedValue,
-    partnerHaveunder18kidValue,
-    setPartnerHaveunder18kidValue,
-    partnerIsBoughtHouseValue,
-    setPartnerIsBoughtHouseValue,
+    partnerPersonNummer,
 
-    startDate,
     setStartDate,
-    endDate,
     setEndDate,
     users,
     setUsers,
-    checkBanned,
-    setCheckBanned,
 
     AddPersonNummer,
     AddUser,
@@ -122,22 +78,71 @@ const SignUpPart = () => {
     return true;
   };
 
-  let foundUser = users.find(
-    (user) =>
-      user.personNummer === personNummer ||
-      user.personNummer === partnerPersonNummer
+  let foundMainFromMain = users.find(
+    (user) => user.personNummer === personNummer
   );
-  let foundPartner = users.find((user) => {
+  let foundMainFromPartner = users.find(
+    (user) => user.personNummer === partnerPersonNummer
+  );
+
+  let foundPartnerFromMain = users.find((user) => {
     if (user.haveLendPartner === "Үгүй") {
       return undefined;
     }
-    if (
-      user.haveLendPartner[0].partnerPersonNummer === personNummer ||
-      user.haveLendPartner[0].partnerPersonNummer === partnerPersonNummer
-    ) {
+    if (user.haveLendPartner[0].partnerPersonNummer === personNummer) {
       return user.haveLendPartner[0];
     }
   });
+  let foundPartnerFromPartner = users.find((user) => {
+    if (user.haveLendPartner === "Үгүй") {
+      return undefined;
+    }
+    if (user.haveLendPartner[0].partnerPersonNummer === partnerPersonNummer) {
+      return user.haveLendPartner[0];
+    }
+  });
+
+  const CheckPersonnummerUsed = async () => {
+    if (!foundMainFromMain) {
+      if (!foundMainFromPartner) {
+        if (!foundPartnerFromMain) {
+          if (!foundPartnerFromPartner) {
+            return await AddUser("users"), AddPersonNummer("personNummers");
+          }
+          if (
+            foundPartnerFromPartner &&
+            foundPartnerFromPartner.endDate.seconds > date.getTime() / 1000
+          ) {
+            return alert(
+              "Хамтран зээлдэгчийн Personnummer 30 хоногийн Ban-тай байна."
+            );
+          }
+          return await AddUser("users"), AddPersonNummer("personNummers");
+        }
+        if (
+          foundPartnerFromMain &&
+          foundPartnerFromMain.endDate.seconds > date.getTime() / 1000
+        ) {
+          return alert("Таны Personnummer ашиглагдсан байна.");
+        }
+        return await AddUser("users"), AddPersonNummer("personNummers");
+      }
+      if (
+        foundMainFromPartner &&
+        foundMainFromPartner.endDate.seconds > date.getTime() / 1000
+      ) {
+        return alert("Хамтран зээлдэгчийн Personnummer ашиглагдсан байна.");
+      }
+      return await AddUser("users"), AddPersonNummer("personNummers");
+    }
+    if (
+      foundMainFromMain &&
+      foundMainFromMain.endDate.seconds > date.getTime() / 1000
+    ) {
+      return alert("Таны Personnummer 30 хоногийн Ban-тай байна.");
+    }
+    return await AddUser("users"), AddPersonNummer("personNummers");
+  };
 
   useEffect(() => {
     setStartDate(date);
@@ -150,12 +155,12 @@ const SignUpPart = () => {
     <div className="flex items-center justify-center">
       <div className="w-[1000px] bg-gradient-to-t from-[#8f91f1] to-[#a2a3f8] shadow-2xl rounded-[8px] relative flex flex-col items-center justify-center box-border px-[10px] md:px-[100px] py-[30px]">
         <h1 className="font-bold text-[40px] md:text-[50px] text-secondary-color uppercase">
-          Хүсэлт
+          {texts.signupPage.signupPart.title}
         </h1>
         <div className="mb-[30px] md:mb-[50px]"></div>
         {!isSubmitted ? (
           <div className="flex flex-col items-center">
-            <BigTitle text={"Хувийн мэдээлэл"} />
+            <BigTitle text={texts.signupPage.signupPart.personInfoTitle} />
             <div className="flex flex-wrap justify-center w-full">
               {personalQuestions.map((question, index) => {
                 return (
@@ -187,7 +192,10 @@ const SignUpPart = () => {
                 );
               })}
             </div>
-            <BigTitle text={"Ажлын газрын мэдээлэл"} className={"mt-[30px]"} />
+            <BigTitle
+              text={texts.signupPage.signupPart.jobInfoTitle}
+              className={"mt-[30px]"}
+            />
             <div className=" flex flex-wrap justify-center w-full">
               {jobQuestions.map((question, index) => {
                 if (question.id === "whenjoinedjob") {
@@ -221,7 +229,10 @@ const SignUpPart = () => {
                 }
               })}
             </div>
-            <BigTitle text={"Бусад мэдээлэл"} className={"mt-[30px]"} />
+            <BigTitle
+              text={texts.signupPage.signupPart.otherInfoTitle}
+              className={"mt-[30px]"}
+            />
             <div className=" flex flex-wrap justify-center w-full">
               {otherQuestions.map((question, index) => {
                 if (
@@ -265,7 +276,10 @@ const SignUpPart = () => {
                 }
               })}
             </div>
-            <BigTitle text={"Зээлийн мэдээлэл"} className={"mt-[30px]"} />
+            <BigTitle
+              text={texts.signupPage.signupPart.lendInfoTitle}
+              className={"mt-[30px]"}
+            />
             <div className="flex flex-wrap justify-center w-full">
               {lendQuestions.map((question, index) => {
                 if (
@@ -350,42 +364,18 @@ const SignUpPart = () => {
             <Button
               text={"Илгээх"}
               func={async () => {
-                // if (!IsValidateEmail(email))
-                //   return alert("Майл хаягаа зөв оруулна уу.");
+                if (!IsValidateEmail(email))
+                  return alert("Таны майл хаяг буруу байна.");
+                if (!IsValidateEmail(partnerEmail))
+                  return alert("Хамтран зээлдэгчийн майл хаяг буруу байна.");
 
-                console.log(users);
-                console.log(foundUser);
-                console.log(foundPartner);
-
-                if (!foundUser) {
-                  if (!foundPartner) {
-                    return (
-                      await AddUser("users"), AddPersonNummer("personNummers")
-                    );
-                  }
-                  if (
-                    foundPartner &&
-                    foundPartner.endDate.seconds > date.getTime() / 1000
-                  ) {
-                    return alert(
-                      "Таны хамтран зээлдэгчийн Personnummer 30 хоногийн Ban-тай байна!"
-                    );
-                  }
-                  return (
-                    await AddUser("users"), AddPersonNummer("personNummers")
-                  );
-                }
-                if (foundUser.endDate.seconds > date.getTime() / 1000) {
-                  return alert("Таны Personnummer 30 хоногийн Ban-тай байна!");
-                }
-                return await AddUser("users"), AddPersonNummer("personNummers");
+                CheckPersonnummerUsed();
               }}
             />
           </div>
         ) : (
           <h2 className="md:w-[400px] text-white text-center">
-            Хүсэлт амжилттай илгээгдлээ! Бид таны мэдээлэлтэй танилцсанаас 24
-            цагийн дараа эргэн холбогдох болно.
+            {texts.signupPage.requestcompletedText}
           </h2>
         )}
       </div>
