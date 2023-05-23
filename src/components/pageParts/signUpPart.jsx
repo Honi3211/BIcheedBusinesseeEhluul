@@ -366,8 +366,6 @@ const SignUpPart = () => {
               func={async () => {
                 if (!IsValidateEmail(email))
                   return alert("Таны майл хаяг буруу байна.");
-                if (!IsValidateEmail(partnerEmail))
-                  return alert("Хамтран зээлдэгчийн майл хаяг буруу байна.");
 
                 CheckPersonnummerUsed();
               }}
