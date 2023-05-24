@@ -337,8 +337,8 @@ const SignUpPart = () => {
                               choice.value === "Тийм" ? true : false
                             ),
                             setHaveLendPartner(choice.value))
-                          : setLendCauseValue(choice.value),
-                          setLendCause(choice.value);
+                          : (setLendCauseValue(choice.value),
+                            setLendCause(choice.value));
                       }}
                     />
                   );
