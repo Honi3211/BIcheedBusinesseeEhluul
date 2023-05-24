@@ -50,6 +50,7 @@ const SignUpPart = () => {
     setLendCauseValue,
     haveunder18kidValue,
     setHaveunder18kidValue,
+    isBoughtHouse,
     isBoughtHouseValue,
     setIsBoughtHouseValue,
     haveLendPartnerValue,
@@ -268,8 +269,9 @@ const SignUpPart = () => {
                           : question.id === "haveunder18kid"
                           ? (setHaveunder18kidValue(choice.value),
                             setHaveUnder18Kid(choice.value))
-                          : setIsBoughtHouseValue(choice.value),
-                          setIsBoughtHouse(choice.value);
+                          : (setIsBoughtHouseValue(choice.value),
+                            setIsBoughtHouse(choice.value),
+                            console.log(isBoughtHouse));
                       }}
                     />
                   );
